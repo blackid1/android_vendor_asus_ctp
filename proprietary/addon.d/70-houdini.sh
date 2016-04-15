@@ -1,0 +1,195 @@
+#!/sbin/sh
+# 
+# /system/addon.d/70-houdini.sh
+#
+
+. /tmp/backuptool.functions
+
+list_files() {
+cat <<EOF
+bin/houdini
+etc/binfmt_misc/arm_dyn
+etc/binfmt_misc/arm_exe
+lib/arm/cpuinfo
+lib/arm/libandroidfw.so
+lib/arm/libandroid_runtime.so
+lib/arm/libandroid.so
+lib/arm/libart.so
+lib/arm/libaudioflinger.so
+lib/arm/libaudioresampler.so
+lib/arm/libaudiospdif.so
+lib/arm/libaudioutils.so
+lib/arm/libbacktrace_libc++.so
+lib/arm/libbacktrace.so
+lib/arm/libbase.so
+lib/arm/libbcc.so
+lib/arm/libbcinfo.so
+lib/arm/libbinder_legacy.so
+lib/arm/libbinder.so
+lib/arm/libblas.so
+lib/arm/libcamera_client.so
+lib/arm/libcamera_metadata.so
+lib/arm/libcommon_time_client.so
+lib/arm/libcompiler_rt.so
+lib/arm/libcrypto.so
+lib/arm/libc.so
+lib/arm/libc++.so
+lib/arm/libcutils.so
+lib/arm/libdl.so
+lib/arm/libdrmframework.so
+lib/arm/libeffects.so
+lib/arm/libEGL.so
+lib/arm/libemoji.so
+lib/arm/libETC1.so
+lib/arm/libexpat.so
+lib/arm/libFFTEm.so
+lib/arm/libfilterfw.so
+lib/arm/libfilterpack_imageproc.so
+lib/arm/libft2.so
+lib/arm/libgabi++.so
+lib/arm/libgccdemangle.so
+lib/arm/libGLES_trace.so
+lib/arm/libGLESv1_CM.so
+lib/arm/libGLESv2.so
+lib/arm/libGLESv3.so
+lib/arm/libgui.so
+lib/arm/libhardware_legacy.so
+lib/arm/libhardware.so
+lib/arm/libharfbuzz_ng.so
+lib/arm/libhwui.so
+lib/arm/libicui18n.so
+lib/arm/libicuuc.so
+lib/arm/libimg_utils.so
+lib/arm/libinputflinger.so
+lib/arm/libinput.so
+lib/arm/libjnigraphics.so
+lib/arm/libjpeg.so
+lib/arm/libLLVM.so
+lib/arm/liblog_legacy.so
+lib/arm/liblog.so
+lib/arm/libmediandk.so
+lib/arm/libmedia.so
+lib/arm/libmediautils.so
+lib/arm/libmemtrack.so
+lib/arm/libminikin.so
+lib/arm/libm.so
+lib/arm/libnativebridge.so
+lib/arm/libnativehelper.so
+lib/arm/libnbaio.so
+lib/arm/libnetd_client.so
+lib/arm/libnetutils.so
+lib/arm/libnfc_ndef.so
+lib/arm/libnl.so
+lib/arm/libOpenMAXAL.so
+lib/arm/libOpenSLES.so
+lib/arm/libopus.so
+lib/arm/libpcre.so
+lib/arm/libpdfium.so
+lib/arm/libpixelflinger.so
+lib/arm/libpng.so
+lib/arm/libpowermanager.so
+lib/arm/libprocessgroup.so
+lib/arm/libprotobuf-cpp-lite.so
+lib/arm/libradio_metadata.so
+lib/arm/libradio.so
+lib/arm/libRScpp.so
+lib/arm/libRSCpuRef.so
+lib/arm/libRSDriver.so
+lib/arm/libRS.so
+lib/arm/libselinux.so
+lib/arm/libserviceutility.so
+lib/arm/libsigchain.so
+lib/arm/libskia.so
+lib/arm/libsonic.so
+lib/arm/libsonivox.so
+lib/arm/libsoundtrigger.so
+lib/arm/libspeexresampler.so
+lib/arm/libsqlite.so
+lib/arm/libssl.so
+lib/arm/libstagefright_avc_common.so
+lib/arm/libstagefright_enc_common.so
+lib/arm/libstagefright_foundation.so
+lib/arm/libstagefright_http_support.so
+lib/arm/libstagefright_omx.so
+lib/arm/libstagefright.so
+lib/arm/libstagefright_yuv.so
+lib/arm/libstdc++.so
+lib/arm/libsurfaceflinger.so
+lib/arm/libsync.so
+lib/arm/libsysutils.so
+lib/arm/libui.so
+lib/arm/libunwind-ptrace.so
+lib/arm/libunwind.so
+lib/arm/libusbhost.so
+lib/arm/libutils.so
+lib/arm/libvorbisidec.so
+lib/arm/libwebrtc_audio_coding.so
+lib/arm/libwilhelm.so
+lib/arm/libz.so
+lib/arm/linker
+lib/arm/nb/libandroid_runtime.so
+lib/arm/nb/libandroid.so
+lib/arm/nb/libart.so
+lib/arm/nb/libaudioflinger.so
+lib/arm/nb/libbinder_legacy.so
+lib/arm/nb/libbinder.so
+lib/arm/nb/libcamera_client.so
+lib/arm/nb/libc.so
+lib/arm/nb/libcutils.so
+lib/arm/nb/libdl.so
+lib/arm/nb/libEGL.so
+lib/arm/nb/libft2.so
+lib/arm/nb/libGLESv1_CM.so
+lib/arm/nb/libGLESv2.so
+lib/arm/nb/libGLESv3.so
+lib/arm/nb/libgui.so
+lib/arm/nb/libhardware_legacy.so
+lib/arm/nb/libhwui.so
+lib/arm/nb/libicui18n.so
+lib/arm/nb/libicuuc.so
+lib/arm/nb/libjnigraphics.so
+lib/arm/nb/libmediandk.so
+lib/arm/nb/libmedia.so
+lib/arm/nb/libm.so
+lib/arm/nb/libnativehelper.so
+lib/arm/nb/libOpenMAXAL.so
+lib/arm/nb/libOpenSLES.so
+lib/arm/nb/libpcre.so
+lib/arm/nb/libpixelflinger.so
+lib/arm/nb/libskia.so
+lib/arm/nb/libsqlite.so
+lib/arm/nb/libstagefright.so
+lib/arm/nb/libsurfaceflinger.so
+lib/arm/nb/libui.so
+lib/arm/nb/libutils.so
+lib/arm/nb/libz.so
+lib/libhoudini.so
+EOF
+}
+
+case "$1" in
+  backup)
+    list_files | while read FILE DUMMY; do
+      backup_file $S/"$FILE"
+    done
+  ;;
+  restore)
+    list_files | while read FILE REPLACEMENT; do
+      R=""
+      [ -n "$REPLACEMENT" ] && R="$S/$REPLACEMENT"
+      [ -f "$C/$S/$FILE" ] && restore_file $S/"$FILE" "$R"
+    done
+  ;;
+  pre-backup)
+    # Stub
+  ;;
+  post-backup)
+    # Stub
+  ;;
+  pre-restore)
+    # Stub
+  ;;
+  post-restore)
+    # Stub
+  ;;
+esac
